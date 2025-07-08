@@ -50,4 +50,10 @@ func died():
 	print('You died.')
 	dead = true
 	hide()
+
+	# wait 2 seconds, then show main menu
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+	# finally delete the node at frame end
 	queue_free()
