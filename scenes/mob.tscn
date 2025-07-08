@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dkvfl2omuxav3"]
 
-[ext_resource type="Script" path="res://scripts/mob.gd" id="1_m0odg"]
+[ext_resource type="Script" uid="uid://bmtm1hm4un7sc" path="res://scripts/mob.gd" id="1_m0odg"]
 [ext_resource type="Texture2D" uid="uid://bcfrsnyym83o0" path="res://sprites/enemy.png" id="1_yuk05"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ci2ud"]

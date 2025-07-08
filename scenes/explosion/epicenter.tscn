@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c46nu5i3bjo45"]
 
-[ext_resource type="Script" path="res://scripts/explosion/explosion-epicenter.gd" id="1_v3g5o"]
+[ext_resource type="Script" uid="uid://lh0svl3xlukh" path="res://scripts/explosion/explosion-epicenter.gd" id="1_v3g5o"]
 [ext_resource type="PackedScene" uid="uid://df6ysvnwvax88" path="res://scenes/explosion/beam.tscn" id="2_yrfvt"]
 [ext_resource type="PackedScene" uid="uid://mq27tixmrjda" path="res://scenes/explosion/end.tscn" id="3_tgnpi"]
 [ext_resource type="Texture2D" uid="uid://cexfqq0tpuctg" path="res://sprites/bomb/fire-epicenter.png" id="4_7e4qm"]
