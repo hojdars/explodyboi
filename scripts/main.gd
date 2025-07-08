@@ -11,6 +11,7 @@ extends Area2D
 var box_positions: Array = [] # TODO: Remove me, all can be handled by box_objects
 var box_objects: Dictionary = {}
 var bomb_positions: Array = []
+var bomb_objects: Dictionary = {}
 
 func _ready():
 	spawn_random_boxes(box_count)
@@ -91,9 +92,11 @@ func _on_player_bomb_placed():
 		return
 	
 	var bomb = bomb_scene.instantiate()
+	bomb.name = bomb.name + "_bomb"
 	bomb.position = Vector2(ind_x * 32 + 16, ind_y * 32 + 16)
 	bomb_positions.append(Vector2(ind_x, ind_y))
-	
+	bomb_objects[Vector2(ind_x, ind_y)] = bomb
+
 	add_child(bomb)
 	bomb.connect("exploded", self._on_bomb_exploded.bind(Vector2(ind_x, ind_y)))
 
@@ -133,6 +136,7 @@ func _on_bomb_exploded(bomb_coords: Vector2):
 	expl.beam_length = beams
 	expl.connect("player_hit", self._on_player_hit)
 	expl.connect("box_hit", self._on_box_hit)
+	expl.connect("bomb_hit", self._on_bomb_hit)
 	add_child(expl)
 
 func _on_player_hit():
@@ -145,8 +149,16 @@ func _on_box_hit(pos: Vector2):
 	if box == null:
 		print('box hit ERROR')
 		return
-	
+
 	box.hit()
+	
+func _on_bomb_hit(pos: Vector2):
+	var bomb = bomb_objects[pos]
+	if bomb == null:
+		print('bomb hit ERROR')
+		return
+
+	bomb.hit()
 
 func _on_box_destroyed(pos: Vector2):
 	box_positions.erase(pos)

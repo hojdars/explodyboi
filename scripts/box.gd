@@ -14,7 +14,6 @@ func hit():
 	$AnimatedSprite2D.play('burning')
 	$BurnTimer.start()
 
-
 func _on_burn_timer_timeout():
 	box_destroyed.emit(coords)
 	queue_free()

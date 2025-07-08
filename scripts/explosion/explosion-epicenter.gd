@@ -10,6 +10,7 @@ extends Area2D
 
 signal player_hit
 signal box_hit
+signal bomb_hit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,6 +22,7 @@ func _ready():
 			end.get_child(0).flip_h = true
 			end.connect("player_hit", self._on_player_hit)
 			end.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(-1, 0)))
+			end.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(-1, 0)))
 			end.name = "end_" + str(get_child_count())
 			add_child(end)
 		else: # spawn beam
@@ -28,6 +30,7 @@ func _ready():
 			beam.position = i * Vector2(-16, 0) + Vector2(0, 1)
 			beam.connect("player_hit", self._on_player_hit)
 			beam.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(-1, 0)))
+			beam.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(-1, 0)))
 			beam.name = "beam_" + str(get_child_count())
 			add_child(beam)
 			
@@ -38,6 +41,7 @@ func _ready():
 			end.position = i * Vector2(16, 0)
 			end.connect("player_hit", self._on_player_hit)
 			end.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(1, 0)))
+			end.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(1, 0)))
 			end.name = "end_" + str(get_child_count())
 			add_child(end)
 		else: # spawn beam
@@ -45,6 +49,7 @@ func _ready():
 			beam.position = i * Vector2(16, 0)
 			beam.connect("player_hit", self._on_player_hit)
 			beam.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(1, 0)))
+			beam.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(1, 0)))
 			beam.name = "beam_" + str(get_child_count())
 			add_child(beam)
 			
@@ -56,6 +61,7 @@ func _ready():
 			end.position = i * Vector2(0, -16)
 			end.connect("player_hit", self._on_player_hit)
 			end.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(0, -1)))
+			end.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(0, -1)))
 			end.name = "end_" + str(get_child_count())
 			add_child(end)
 		else: # spawn beam
@@ -64,6 +70,7 @@ func _ready():
 			beam.position = i * Vector2(0, -16)
 			beam.connect("player_hit", self._on_player_hit)
 			beam.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(0, -1)))
+			beam.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(0, -1)))
 			beam.name = "beam_" + str(get_child_count())
 			add_child(beam)
 			
@@ -75,6 +82,7 @@ func _ready():
 			end.position = i * Vector2(0, 16)
 			end.connect("player_hit", self._on_player_hit)
 			end.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(0, 1)))
+			end.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(0, 1)))
 			end.name = "end_" + str(get_child_count())
 			add_child(end)
 		else: # spawn beam
@@ -83,6 +91,7 @@ func _ready():
 			beam.position = i * Vector2(0, 16)
 			beam.connect("player_hit", self._on_player_hit)
 			beam.connect("box_hit", self._on_box_hit.bind(epi_pos + i * Vector2(0, 1)))
+			beam.connect("bomb_hit", self._on_bomb_hit.bind(epi_pos + i * Vector2(0, 1)))
 			beam.name = "beam_" + str(get_child_count())
 			add_child(beam)
 
@@ -102,13 +111,17 @@ func _on_timer_timeout():
 
 func _on_box_hit(pos: Vector2):
 	box_hit.emit(pos)
+	
+func _on_bomb_hit(pos: Vector2):
+	bomb_hit.emit(pos)
 
 func _on_player_hit():
 	player_hit.emit()
 
 func _on_body_entered(body: Node2D):
-	print(body)
 	if body.name == "Player":
 		_on_player_hit()
 	if body.is_in_group("destructibles"):
 		_on_box_hit(epi_pos)
+	if body.is_in_group("bombs"):
+		_on_bomb_hit(epi_pos)

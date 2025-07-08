@@ -1,4 +1,4 @@
-extends Area2D
+extends RigidBody2D
 
 signal exploded
 
@@ -15,7 +15,13 @@ func _on_light_up_timer_timeout():
 	$AnimatedSprite2D.animation = "burning"
 	$AnimatedSprite2D.play()
 
-func _on_fuse_timer_timeout():
+func hit():
+	_explode()
+
+func _explode():
 	hide()
 	queue_free()
 	exploded.emit()
+
+func _on_fuse_timer_timeout():
+	_explode()
