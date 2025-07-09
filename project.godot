@@ -24,6 +24,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=704
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom="uid://b56hcyp1priwg"
+
 [input]
 
 move_right={

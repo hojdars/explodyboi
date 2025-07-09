@@ -23,6 +23,7 @@ func do_movement(input_dir: Vector2):
 		place_bomb()
 	
 	velocity = input_dir * speed
+	
 	move_and_slide()
 	position = position.clamp(Vector2.ZERO, screen_size)
 
